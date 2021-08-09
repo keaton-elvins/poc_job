@@ -69,11 +69,12 @@ async def find_recs(body: RecordsRequest = Body(..., example=example_request)):
 
         elif score > weakest["Score"]:
             job_recs.remove(weakest)
-            weakest = min(job_recs, key=lambda rec: rec["Score"])
 
             row = df.loc[i]
-            job_recs.append({"Name":row[0], "Link":row[1], "Score":score})
-            
+            job_recs.append({"Name": row[0], "Link": row[1], "Score": score})
+
+            weakest = min(job_recs, key=lambda rec: rec["Score"])
+
     job_recs.reverse()
 
     res.update({"recordId": body.values[0].recordId})
